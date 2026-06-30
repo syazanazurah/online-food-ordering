@@ -1,0 +1,563 @@
+/* =============================================================================
+   NomNom Food Ordering — Design System
+   Mobile-first, Bootstrap 5 compatible, PWA-ready
+   ============================================================================= */
+
+:root {
+  /* Brand palette */
+  --nn-primary: #ff6b35;
+  --nn-primary-dark: #e55a2b;
+  --nn-primary-light: #fff1ea;
+  --nn-accent: #2ec4b6;
+  --nn-warning: #ffb800;
+  --nn-danger: #e63946;
+
+  /* Neutrals */
+  --nn-bg: #fafaf7;
+  --nn-surface: #ffffff;
+  --nn-border: #e8e8e3;
+  --nn-text: #1a1a1a;
+  --nn-text-muted: #6b7280;
+  --nn-text-soft: #9ca3af;
+
+  /* Elevation */
+  --nn-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --nn-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --nn-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.10);
+
+  /* Radii */
+  --nn-radius-sm: 8px;
+  --nn-radius: 12px;
+  --nn-radius-lg: 20px;
+  --nn-radius-pill: 999px;
+
+  /* Spacing scale (rem) */
+  --nn-space-1: 0.25rem;
+  --nn-space-2: 0.5rem;
+  --nn-space-3: 0.75rem;
+  --nn-space-4: 1rem;
+  --nn-space-5: 1.5rem;
+  --nn-space-6: 2rem;
+  --nn-space-8: 3rem;
+}
+
+/* -----------------------------------------------------------------------------
+   Base
+   ----------------------------------------------------------------------------- */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto,
+               Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--nn-text);
+  background: var(--nn-bg);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 80px; /* space for mobile bottom nav */
+}
+
+a { color: var(--nn-primary); text-decoration: none; }
+a:hover { color: var(--nn-primary-dark); text-decoration: underline; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--nn-space-3);
+}
+h1 { font-size: 2rem; }
+h2 { font-size: 1.5rem; }
+h3 { font-size: 1.25rem; }
+
+.text-muted-soft { color: var(--nn-text-muted); }
+
+/* -----------------------------------------------------------------------------
+   Top navigation (desktop + mobile)
+   ----------------------------------------------------------------------------- */
+.nn-navbar {
+  background: var(--nn-surface);
+  border-bottom: 1px solid var(--nn-border);
+  padding: var(--nn-space-3) 0;
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  box-shadow: var(--nn-shadow-sm);
+}
+.nn-brand {
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: var(--nn-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nn-space-2);
+}
+.nn-brand:hover { text-decoration: none; color: var(--nn-primary-dark); }
+.nn-brand-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--nn-radius-sm);
+  background: var(--nn-primary);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.nn-nav-link {
+  color: var(--nn-text);
+  font-weight: 500;
+  padding: var(--nn-space-2) var(--nn-space-3);
+  border-radius: var(--nn-radius-sm);
+  transition: background 0.15s;
+}
+.nn-nav-link:hover { background: var(--nn-primary-light); color: var(--nn-primary); text-decoration: none; }
+.nn-nav-link.active { color: var(--nn-primary); background: var(--nn-primary-light); }
+
+.nn-cart-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--nn-space-2);
+}
+.nn-cart-count {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+  background: var(--nn-primary);
+  color: #fff;
+  border-radius: var(--nn-radius-pill);
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  min-width: 18px;
+  text-align: center;
+}
+
+/* -----------------------------------------------------------------------------
+   Mobile bottom navigation (PWA-style)
+   ----------------------------------------------------------------------------- */
+.nn-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--nn-surface);
+  border-top: 1px solid var(--nn-border);
+  display: flex;
+  justify-content: space-around;
+  padding: var(--nn-space-2) 0;
+  z-index: 1030;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.04);
+}
+.nn-bottom-nav-item {
+  flex: 1;
+  text-align: center;
+  color: var(--nn-text-muted);
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: var(--nn-space-2);
+  text-decoration: none;
+}
+.nn-bottom-nav-item:hover { text-decoration: none; color: var(--nn-primary); }
+.nn-bottom-nav-item.active { color: var(--nn-primary); }
+.nn-bottom-nav-icon { display: block; font-size: 1.25rem; margin-bottom: 2px; }
+
+@media (min-width: 992px) {
+  .nn-bottom-nav { display: none; }
+  body { padding-bottom: 0; }
+}
+
+/* -----------------------------------------------------------------------------
+   Buttons
+   ----------------------------------------------------------------------------- */
+.nn-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--nn-space-2);
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--nn-radius);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+  line-height: 1.4;
+}
+.nn-btn-primary {
+  background: var(--nn-primary);
+  color: #fff;
+}
+.nn-btn-primary:hover {
+  background: var(--nn-primary-dark);
+  color: #fff;
+  text-decoration: none;
+  transform: translateY(-1px);
+  box-shadow: var(--nn-shadow);
+}
+.nn-btn-outline {
+  background: transparent;
+  color: var(--nn-text);
+  border-color: var(--nn-border);
+}
+.nn-btn-outline:hover {
+  background: var(--nn-surface);
+  border-color: var(--nn-primary);
+  color: var(--nn-primary);
+  text-decoration: none;
+}
+.nn-btn-ghost {
+  background: transparent;
+  color: var(--nn-text);
+  border: 0;
+}
+.nn-btn-ghost:hover { background: var(--nn-primary-light); color: var(--nn-primary); }
+.nn-btn-block { width: 100%; }
+.nn-btn-lg { padding: 0.875rem 1.5rem; font-size: 1rem; }
+.nn-btn-sm { padding: 0.375rem 0.875rem; font-size: 0.85rem; }
+
+/* -----------------------------------------------------------------------------
+   Cards
+   ----------------------------------------------------------------------------- */
+.nn-card {
+  background: var(--nn-surface);
+  border: 1px solid var(--nn-border);
+  border-radius: var(--nn-radius);
+  overflow: hidden;
+  transition: all 0.2s;
+}
+.nn-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--nn-shadow);
+  border-color: transparent;
+}
+.nn-card-body { padding: var(--nn-space-4); }
+.nn-card-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  background: linear-gradient(135deg, #ffd6c2, #ffb59c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+
+.nn-card-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
+.nn-card-meta {
+  font-size: 0.85rem;
+  color: var(--nn-text-muted);
+  display: flex;
+  gap: var(--nn-space-3);
+  flex-wrap: wrap;
+}
+.nn-rating { color: var(--nn-warning); font-weight: 600; }
+
+/* -----------------------------------------------------------------------------
+   Hero / search
+   ----------------------------------------------------------------------------- */
+.nn-hero {
+  background: linear-gradient(135deg, #fff1ea 0%, #ffe4d6 100%);
+  padding: var(--nn-space-8) 0;
+  border-radius: var(--nn-radius-lg);
+  margin-bottom: var(--nn-space-6);
+}
+.nn-hero h1 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  margin-bottom: var(--nn-space-3);
+}
+.nn-hero p { color: var(--nn-text-muted); font-size: 1.05rem; margin-bottom: var(--nn-space-5); }
+
+.nn-search-bar {
+  background: var(--nn-surface);
+  border-radius: var(--nn-radius-pill);
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  gap: var(--nn-space-2);
+  box-shadow: var(--nn-shadow);
+  max-width: 640px;
+}
+.nn-search-bar input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  padding: var(--nn-space-3) var(--nn-space-4);
+  font-size: 0.95rem;
+  background: transparent;
+}
+
+/* -----------------------------------------------------------------------------
+   Forms
+   ----------------------------------------------------------------------------- */
+.nn-form-label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: var(--nn-space-2);
+  color: var(--nn-text);
+}
+.nn-form-control {
+  display: block;
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  font-size: 0.95rem;
+  border: 1px solid var(--nn-border);
+  border-radius: var(--nn-radius-sm);
+  background: var(--nn-surface);
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.nn-form-control:focus {
+  outline: 0;
+  border-color: var(--nn-primary);
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
+}
+.nn-form-help {
+  font-size: 0.8rem;
+  color: var(--nn-text-muted);
+  margin-top: var(--nn-space-1);
+}
+.nn-form-group { margin-bottom: var(--nn-space-4); }
+
+/* -----------------------------------------------------------------------------
+   Auth pages (login / register)
+   ----------------------------------------------------------------------------- */
+.nn-auth-wrap {
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--nn-space-5);
+}
+.nn-auth-card {
+  background: var(--nn-surface);
+  border: 1px solid var(--nn-border);
+  border-radius: var(--nn-radius-lg);
+  padding: var(--nn-space-6);
+  width: 100%;
+  max-width: 440px;
+  box-shadow: var(--nn-shadow);
+}
+
+/* -----------------------------------------------------------------------------
+   Filters & chips
+   ----------------------------------------------------------------------------- */
+.nn-chip-group {
+  display: flex;
+  gap: var(--nn-space-2);
+  flex-wrap: wrap;
+  margin-bottom: var(--nn-space-4);
+}
+.nn-chip {
+  padding: 0.4rem 0.875rem;
+  border-radius: var(--nn-radius-pill);
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid var(--nn-border);
+  background: var(--nn-surface);
+  color: var(--nn-text);
+  cursor: pointer;
+  transition: all 0.15s;
+  text-decoration: none;
+}
+.nn-chip:hover { border-color: var(--nn-primary); color: var(--nn-primary); text-decoration: none; }
+.nn-chip.active { background: var(--nn-primary); color: #fff; border-color: var(--nn-primary); }
+
+/* -----------------------------------------------------------------------------
+   Restaurant detail page
+   ----------------------------------------------------------------------------- */
+.nn-restaurant-hero {
+  height: 240px;
+  border-radius: var(--nn-radius-lg);
+  background: linear-gradient(135deg, #ff8a5c, #ff6b35);
+  margin-bottom: var(--nn-space-5);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  padding: var(--nn-space-5);
+  color: #fff;
+}
+.nn-restaurant-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+}
+.nn-restaurant-hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.nn-menu-item {
+  display: flex;
+  gap: var(--nn-space-4);
+  padding: var(--nn-space-4) 0;
+  border-bottom: 1px solid var(--nn-border);
+}
+.nn-menu-item:last-child { border-bottom: 0; }
+.nn-menu-item-info { flex: 1; }
+.nn-menu-item-name { font-weight: 600; margin-bottom: 4px; }
+.nn-menu-item-desc { font-size: 0.9rem; color: var(--nn-text-muted); margin-bottom: var(--nn-space-2); }
+.nn-menu-item-price { font-weight: 700; color: var(--nn-primary); }
+.nn-menu-item-img {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--nn-radius);
+  background: linear-gradient(135deg, #ffd6c2, #ffb59c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+/* -----------------------------------------------------------------------------
+   Cart / checkout
+   ----------------------------------------------------------------------------- */
+.nn-cart-item {
+  display: flex;
+  gap: var(--nn-space-3);
+  padding: var(--nn-space-4);
+  background: var(--nn-surface);
+  border: 1px solid var(--nn-border);
+  border-radius: var(--nn-radius);
+  margin-bottom: var(--nn-space-3);
+  align-items: center;
+}
+.nn-cart-item-img {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--nn-radius-sm);
+  background: linear-gradient(135deg, #ffd6c2, #ffb59c);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+.nn-qty-control {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--nn-border);
+  border-radius: var(--nn-radius-pill);
+  overflow: hidden;
+}
+.nn-qty-btn {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border: 0;
+  color: var(--nn-text);
+  font-size: 1rem;
+  cursor: pointer;
+}
+.nn-qty-btn:hover { background: var(--nn-primary-light); color: var(--nn-primary); }
+.nn-qty-value {
+  min-width: 32px;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.nn-summary-row {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--nn-space-2) 0;
+  font-size: 0.95rem;
+}
+.nn-summary-row.nn-total {
+  border-top: 2px solid var(--nn-border);
+  margin-top: var(--nn-space-3);
+  padding-top: var(--nn-space-3);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+/* -----------------------------------------------------------------------------
+   Empty / status states
+   ----------------------------------------------------------------------------- */
+.nn-empty {
+  text-align: center;
+  padding: var(--nn-space-8) var(--nn-space-4);
+  color: var(--nn-text-muted);
+}
+.nn-empty-icon { font-size: 3rem; margin-bottom: var(--nn-space-3); opacity: 0.5; }
+
+.nn-success-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--nn-accent);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  margin-bottom: var(--nn-space-4);
+}
+
+/* -----------------------------------------------------------------------------
+   Footer
+   ----------------------------------------------------------------------------- */
+.nn-footer {
+  background: var(--nn-surface);
+  border-top: 1px solid var(--nn-border);
+  padding: var(--nn-space-6) 0 var(--nn-space-4);
+  margin-top: var(--nn-space-8);
+  font-size: 0.9rem;
+  color: var(--nn-text-muted);
+}
+
+@media (max-width: 991px) {
+  .nn-footer { padding-bottom: 100px; } /* clear bottom-nav */
+}
+
+/* -----------------------------------------------------------------------------
+   Utilities
+   ----------------------------------------------------------------------------- */
+.nn-section { padding: var(--nn-space-5) 0; }
+.nn-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--nn-space-4);
+}
+.nn-divider { height: 1px; background: var(--nn-border); margin: var(--nn-space-5) 0; border: 0; }
+
+.nn-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--nn-radius-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: var(--nn-primary-light);
+  color: var(--nn-primary);
+}
+.nn-tag-success { background: rgba(46, 196, 182, 0.15); color: var(--nn-accent); }
+.nn-tag-warning { background: rgba(255, 184, 0, 0.18); color: #b07b00; }
+
+/* PWA install prompt banner */
+.nn-install-banner {
+  position: fixed;
+  left: 16px;
+  right: 16px;
+  bottom: 80px;
+  background: var(--nn-text);
+  color: #fff;
+  padding: var(--nn-space-3) var(--nn-space-4);
+  border-radius: var(--nn-radius);
+  display: none;
+  align-items: center;
+  gap: var(--nn-space-3);
+  z-index: 1040;
+  box-shadow: var(--nn-shadow-lg);
+}
+@media (min-width: 992px) {
+  .nn-install-banner { bottom: 24px; left: auto; right: 24px; max-width: 380px; }
+}

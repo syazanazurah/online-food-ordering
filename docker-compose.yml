@@ -1,0 +1,66 @@
+# =============================================================================
+# NomNom — docker-compose.yml
+# Two services that mirror the planned production stack:
+#   web : Apache 2.4 + PHP 8.3.14   (built from Dockerfile)
+#   db  : MariaDB 11.5.2            (auto-loads ./database/*.sql on first boot)
+#
+# Database GUI: connect DbVisualizer Pro from the host to localhost:3306.
+# (No phpMyAdmin container — DbVis Pro fills that role.)
+#
+# Usage:
+#   docker compose up -d            # start the stack
+#   docker compose ps               # list running containers
+#   docker compose logs -f web      # tail web logs
+#   docker compose down             # stop (add -v to also wipe the db volume)
+#
+# After `up`:
+#   App  -> http://localhost:8000
+#   DB   -> localhost:3306         (DbVisualizer Pro: server localhost, user nomnom)
+# =============================================================================
+
+services:
+  web:
+    build: .
+    container_name: nomnom-web
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - nomnom-net
+
+  db:
+    image: mariadb:11.5.2
+    container_name: nomnom-db
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: rootsecret
+      MARIADB_DATABASE: restaurant
+      MARIADB_USER: nomnom
+      MARIADB_PASSWORD: 123456
+    ports:
+      - "3306:3306"
+    volumes:
+      # MariaDB runs every *.sql here in alphabetical order on first boot:
+      #   01-schema.sql -> 02-seed.sql  (the .md files are ignored)
+      - ./database:/docker-entrypoint-initdb.d:ro
+      - nomnom-db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - nomnom-net
+
+volumes:
+  nomnom-db-data:
+
+networks:
+  nomnom-net:
+    driver: bridge
